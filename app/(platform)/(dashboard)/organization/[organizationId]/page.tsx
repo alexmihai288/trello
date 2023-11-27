@@ -1,25 +1,20 @@
-import { db } from "@/lib/db"
+import { Separator } from "@/components/ui/separator";
+import { Info } from "./_components/Info";
+import BoardList from "./_components/BoardList";
+import { Suspense } from "react";
 
-const OrganizationIdPage = ()=>{
-    async function create(formData:FormData) {
-        "use server"
+const OrganizationIdPage = async () => {
+  return (
+    <div className="w-full mb-20">
+      <Info />
+      <Separator className="my-4" />
+      <div className="px-2 md:px-4">
+        <Suspense fallback={<BoardList.Skeleton/>}>
+          <BoardList />
+        </Suspense>
+      </div>
+    </div>
+  );
+};
 
-        const title = formData.get("title") as string
-
-        db.board.create({
-            data:{
-                title
-            }
-        })
-    }
-
-    return (
-        <div>
-            <form action={create}>
-                <input id="title" name="title" required placeholder="Enter a board title" className="border-black border p-1"/>
-            </form>
-        </div>
-    )
-}
-
-export default OrganizationIdPage
+export default OrganizationIdPage;
